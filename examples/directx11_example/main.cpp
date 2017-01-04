@@ -140,6 +140,7 @@ int main(int, char**)
     //io.Fonts->AddFontFromFileTTF("../../extra_fonts/ProggyTiny.ttf", 10.0f);
     //io.Fonts->AddFontFromFileTTF("c:\\Windows\\Fonts\\ArialUni.ttf", 18.0f, NULL, io.Fonts->GetGlyphRangesJapanese());
 
+	int vsync = 1;
     bool show_test_window = true;
     bool show_another_window = false;
     ImVec4 clear_col = ImColor(114, 144, 154);
@@ -162,6 +163,7 @@ int main(int, char**)
         {
             static float f = 0.0f;
             ImGui::Text("Hello, world!");
+			ImGui::SliderInt("vertical sync", &vsync, 0, 4);
             ImGui::SliderFloat("float", &f, 0.0f, 1.0f);
             ImGui::ColorEdit3("clear color", (float*)&clear_col);
             if (ImGui::Button("Test Window")) show_test_window ^= 1;
@@ -188,7 +190,7 @@ int main(int, char**)
         // Rendering
         g_pd3dDeviceContext->ClearRenderTargetView(g_mainRenderTargetView, (float*)&clear_col);
         ImGui::Render();
-        g_pSwapChain->Present(0, 0);
+        g_pSwapChain->Present((UINT)vsync, 0);
     }
 
     ImGui_ImplDX11_Shutdown();
